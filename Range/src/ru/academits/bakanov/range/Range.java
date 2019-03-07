@@ -9,9 +9,6 @@ public class Range {
         this.to = to;
     }
 
-    public Range() {
-    }
-
     public double getFrom() {
         return from;
     }
