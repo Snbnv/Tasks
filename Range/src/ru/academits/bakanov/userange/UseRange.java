@@ -1,12 +1,11 @@
-import java.util.Scanner;
+package ru.academits.bakanov.userange;
+
+import ru.academits.bakanov.range.Range;
 
 class UseRange {
     public static void main(String[] args) {
-        double from = 5;
-        double to = 10;
-        double x = 7;
-
-        Range range = new Range(from, to);
+        Range range = new Range(1, 10);
+        double x = 5.2;
 
         System.out.println("Длинна диапозона = " + range.getLength());
 
