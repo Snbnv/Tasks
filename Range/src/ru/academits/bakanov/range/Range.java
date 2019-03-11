@@ -50,32 +50,28 @@ public class Range {
     public Range[] getUnion(Range r1, Range r2) {
         if (r1.to < r2.from || r2.to < r1.from) {
             return new Range[]{r1, r2};
-            //System.out.printf("интервал объединения - (%.2f - %.2f,  %.2f - %.2f)", r1.from, r1.to, r2.from, r2.to);
-            //System.out.println();
         } else {
-            Range rangeNew = new Range();
-            rangeNew.from = r1.from <= r2.from ? r1.from : r2.from;
-            rangeNew.to = r1.to <= r2.to ? r2.to : r1.to;
-            return new Range[]{rangeNew};
-            //System.out.printf("интервал объединения (%.2f-%.2f)", this.from, this.to);
-            //System.out.println();
+            Range rangeUnion = new Range();
+            rangeUnion.from = r1.from <= r2.from ? r1.from : r2.from;
+            rangeUnion.to = r1.to <= r2.to ? r2.to : r1.to;
+            return new Range[]{rangeUnion};
         }
     }
 
-    public void getDifference(Range r1, Range r2) {
+    public Range[] getDifference(Range r1, Range r2) {
         if (r1.to < r2.from || r2.to < r1.from) {
-            this.from = r1.from;
-            this.to = r1.to;
-            System.out.printf("интервал разности (%.2f-%.2f)", this.from, this.to);
-        } else if (r1.from < r2.from && r1.to > r2.to) {
-            r1.to = r2.from;
-            r2.from = r2.to;
-            r2.to = r1.to;
-            Range[] rangeNew = {r1, r2};
-            System.out.printf("интервал разности - (%.2f - %.2f, %.2f - %.2f)", r1.from, r1.to, r2.from, r2.to);
-            System.out.println();
+            return new Range[]{r1};
+        } else if (r1.isInside(r2.from) && r1.isInside(r2.to)) {
+            Range part1 = new Range();
+            Range part2 = new Range();
+            part1.from = r1.from;
+            part1.to = r2.from;
+            part2.from = r2.to;
+            part2.to = r1.to;
+            return new Range[]{part1, part2};
         } else {
-            System.out.printf("интервал разности (%.2f-%.2f)", r1.from, r2.from);
+            Range rangeDifference = new Range(r1.from, r2.from);
+            return new Range[]{rangeDifference};
         }
     }
 }
