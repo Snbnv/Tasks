@@ -3,6 +3,7 @@ package ru.academits.bakanov.main;
 import ru.academits.bakanov.shape.*;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,15 +11,44 @@ public class Main {
         Shape shape2 = new Square(8.3);
         Shape shape3 = new Triangle(6.3, 4, 5.5, 6, 1, 3.1);
         Shape shape4 = new Triangle(12, 7, 8, 6, 4.7, 2);
-        Shape shape5 = new Rectangle(3 ,5);
-        Shape shape6 = new Rectangle(4.2 ,3.1);
-        Shape shape7 = new Circle(4.5);
-        Shape shape8 = new Circle(6);
+        Shape shape5 = new Rectangle(3, 5);
+        Shape shape6 = new Rectangle(4.2, 3.1);
+        Shape shape7 = new Circle(1.5);
+        Shape shape8 = new Circle(4.5);
 
+        Shape maxAreaShape = getMaxAreaShape(shape1, shape2, shape3, shape4, shape5, shape6, shape7, shape8);
+        Shape maxPerimeterShape = getMaxPerimeterShape(shape1, shape2, shape3, shape4, shape5, shape6, shape7, shape8);
+
+        System.out.println("Фигура с наибольшей площадью :");
+        System.out.printf("ширина : %.1f; высота : %.1f; площадь : %.1f; периметр : %.1f.", maxAreaShape.getWidth(),
+                maxAreaShape.getHeight(), maxAreaShape.getArea(), maxAreaShape.getPerimeter());
+        System.out.println();
+
+        System.out.println("Фигура со вторым по величине периметром :");
+        System.out.printf("ширина : %.1f; высота : %.1f; площадь : %.1f; периметр : %.1f.", maxPerimeterShape.getWidth(),
+                maxPerimeterShape.getHeight(), maxPerimeterShape.getArea(), maxPerimeterShape.getPerimeter());
+        System.out.println();
     }
 
-    public static Shape getMaxAreaShape(Shape... numbers){
-        double [] shapesArea = {}
-        return Arrays.sort()
+    private static Shape getMaxAreaShape(Shape... shapes) {
+        Arrays.sort(shapes, new AreaComparator());
+        return shapes[shapes.length - 1];
+    }
+
+    private static Shape getMaxPerimeterShape(Shape... shapes) {
+        Arrays.sort(shapes, new PerimeterComparator());
+        return shapes[shapes.length - 2];
+    }
+}
+
+class AreaComparator implements Comparator<Shape> {
+    public int compare(Shape a, Shape b) {
+        return Double.compare(a.getArea(), b.getArea());
+    }
+}
+
+class PerimeterComparator implements Comparator<Shape> {
+    public int compare(Shape a, Shape b) {
+        return Double.compare(a.getPerimeter(), b.getPerimeter());
     }
 }
