@@ -19,15 +19,11 @@ public class Main {
         Shape maxAreaShape = getMaxAreaShape(shape1, shape2, shape3, shape4, shape5, shape6, shape7, shape8);
         Shape maxPerimeterShape = getMaxPerimeterShape(shape1, shape2, shape3, shape4, shape5, shape6, shape7, shape8);
 
-        System.out.println("Фигура с наибольшей площадью :");
-        System.out.printf("ширина : %.1f; высота : %.1f; площадь : %.1f; периметр : %.1f.", maxAreaShape.getWidth(),
-                maxAreaShape.getHeight(), maxAreaShape.getArea(), maxAreaShape.getPerimeter());
-        System.out.println();
+        System.out.print("Фигура с наибольшей площадью - ");
+        System.out.println(maxAreaShape.toString());
 
-        System.out.println("Фигура со вторым по величине периметром :");
-        System.out.printf("ширина : %.1f; высота : %.1f; площадь : %.1f; периметр : %.1f.", maxPerimeterShape.getWidth(),
-                maxPerimeterShape.getHeight(), maxPerimeterShape.getArea(), maxPerimeterShape.getPerimeter());
-        System.out.println();
+        System.out.print("Фигура со вторым по величине периметром - ");
+        System.out.println(maxPerimeterShape.toString());
     }
 
     private static Shape getMaxAreaShape(Shape... shapes) {
