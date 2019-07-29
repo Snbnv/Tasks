@@ -20,6 +20,7 @@ public class MainVector {
 
         System.out.println(vector3.getSize());
 
+        System.out.println((vector2.Sum(vector3)).toString);
 
     }
 }
