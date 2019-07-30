@@ -20,7 +20,19 @@ public class MainVector {
 
         System.out.println(vector3.getSize());
 
-        System.out.println((vector2.Sum(vector3)).toString);
+        vector3.Sum(vector4);
+        System.out.println(vector3.toString());
+
+        vector3.Dif(vector4);
+        System.out.println(vector3.toString());
+
+        vector3.Scl(5);
+        System.out.println(vector3.toString());
+
+        vector3.Ret();
+        System.out.println(vector3.toString());
+
+        System.out.println(vector3.getModul());
 
     }
 }
