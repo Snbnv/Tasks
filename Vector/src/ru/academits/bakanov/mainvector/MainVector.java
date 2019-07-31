@@ -33,6 +33,15 @@ public class MainVector {
         System.out.println(vector3.toString());
 
         System.out.println(vector3.getModul());
+        System.out.println(vector4.getComponent(3));
+        vector4.setComponent(3, 7.2);
+        System.out.println(vector4.getComponent(3));
+
+        System.out.println(Vector.Sum(vector3, vector4).toString());
+        System.out.println(Vector.Different(vector3, vector4).toString());
+        System.out.println(Vector.Scl(vector3, vector4).toString());
+
+
 
     }
 }
