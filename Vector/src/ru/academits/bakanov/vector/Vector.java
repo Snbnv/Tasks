@@ -58,7 +58,7 @@ public class Vector {
     }
 
 
-    public void Sum(Vector v1) {
+    public void Summ(Vector v1) {
         int size = (v1.getSize() >= n) ? v1.getSize() : n;
         double[] v = new double[size];
 
@@ -77,7 +77,7 @@ public class Vector {
         this.vector = v;
     }
 
-    public void Dif(Vector v1) {
+    public void Different(Vector v1) {
         int size = (v1.getSize() >= n) ? v1.getSize() : n;
         double[] v = new double[size];
 
@@ -96,19 +96,19 @@ public class Vector {
         this.vector = v;
     }
 
-    public void Scl(double a) {
+    public void SclProd(double a) {
         for (int i = 0; i < n; i++) {
             vector[i] = vector[i] * a;
         }
     }
 
-    public void Ret() {
+    public void Turn() {
         for (int i = 0; i < n; i++) {
             vector[i] = vector[i] * -1;
         }
     }
 
-    public double getModul() {
+    public double getModule() {
         double mod = 0;
         for (int i = 0; i < n; i++) {
             mod = mod + vector[i] * vector[i];
@@ -152,7 +152,7 @@ public class Vector {
         return true;
     }
 
-    public static Vector Sum(Vector v1, Vector v2) throws IllegalAccessException {
+    public static Vector Summ(Vector v1, Vector v2) throws IllegalAccessException {
         int size = (v1.getSize() >= v2.getSize()) ? v1.getSize() : v2.getSize();
         double[] v = new double[size];
 
@@ -188,7 +188,7 @@ public class Vector {
         return new Vector(size, v);
     }
 
-    public static Vector Scl(Vector v1, Vector v2) throws IllegalAccessException {
+    public static Vector SclProd(Vector v1, Vector v2) throws IllegalAccessException {
         int size = (v1.getSize() >= v2.getSize()) ? v1.getSize() : v2.getSize();
         double[] v = new double[size];
 

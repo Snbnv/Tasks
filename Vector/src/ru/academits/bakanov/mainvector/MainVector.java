@@ -20,26 +20,26 @@ public class MainVector {
 
         System.out.println(vector3.getSize());
 
-        vector3.Sum(vector4);
+        vector3.Summ(vector4);
         System.out.println(vector3.toString());
 
-        vector3.Dif(vector4);
+        vector3.Different(vector4);
         System.out.println(vector3.toString());
 
-        vector3.Scl(5);
+        vector3.SclProd(5);
         System.out.println(vector3.toString());
 
-        vector3.Ret();
+        vector3.Turn();
         System.out.println(vector3.toString());
 
-        System.out.println(vector3.getModul());
+        System.out.println(vector3.getModule());
         System.out.println(vector4.getComponent(3));
         vector4.setComponent(3, 7.2);
         System.out.println(vector4.getComponent(3));
 
-        System.out.println(Vector.Sum(vector3, vector4).toString());
+        System.out.println(Vector.Summ(vector3, vector4).toString());
         System.out.println(Vector.Different(vector3, vector4).toString());
-        System.out.println(Vector.Scl(vector3, vector4).toString());
+        System.out.println(Vector.SclProd(vector3, vector4).toString());
 
         System.out.println(vector1.hashCode());
         System.out.println(vector2.hashCode());
