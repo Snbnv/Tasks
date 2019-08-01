@@ -41,6 +41,14 @@ public class MainVector {
         System.out.println(Vector.Different(vector3, vector4).toString());
         System.out.println(Vector.Scl(vector3, vector4).toString());
 
+        System.out.println(vector1.hashCode());
+        System.out.println(vector2.hashCode());
+        System.out.println(vector3.hashCode());
+        System.out.println(vector1.equals(vector3));
+        System.out.println(vector2.equals(vector1));
+
+
+
 
 
     }

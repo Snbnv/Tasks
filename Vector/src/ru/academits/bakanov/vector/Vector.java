@@ -124,6 +124,34 @@ public class Vector {
         this.vector[a] = s;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 13;
+        int hash = 1;
+        hash = prime * hash + Arrays.hashCode(this.vector);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
+        Vector v = (Vector) o;
+        if (this.n != v.n) {
+            return false;
+        }
+        for (int i = 0; i < n; i++) {
+            if (this.vector[i] != v.vector[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static Vector Sum(Vector v1, Vector v2) throws IllegalAccessException {
         int size = (v1.getSize() >= v2.getSize()) ? v1.getSize() : v2.getSize();
         double[] v = new double[size];
