@@ -1,9 +1,9 @@
 package ru.academits.bakanov.main;
 
+import ru.academits.bakanov.comparators.*;
 import ru.academits.bakanov.shape.*;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
@@ -37,14 +37,3 @@ public class Main {
     }
 }
 
-class AreaComparator implements Comparator<Shape> {
-    public int compare(Shape a, Shape b) {
-        return Double.compare(a.getArea(), b.getArea());
-    }
-}
-
-class PerimeterComparator implements Comparator<Shape> {
-    public int compare(Shape a, Shape b) {
-        return Double.compare(a.getPerimeter(), b.getPerimeter());
-    }
-}

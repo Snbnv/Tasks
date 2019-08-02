@@ -45,7 +45,7 @@ public class Rectangle implements Shape {
     public int hashCode() {
         final int prime = 5;
         int hash = 1;
-        hash = hash * prime + (int) width;
+        hash = hash * prime + Double.hashCode(width);
         hash = hash * prime + Double.hashCode(height);
         return hash;
     }
@@ -58,7 +58,7 @@ public class Rectangle implements Shape {
         if (o == null || o.getClass() != this.getClass()) {
             return false;
         }
-        Circle a = (Circle) o;
-        return getWidth() == a.getWidth() && getHeight() == a.getHeight();
+        Rectangle a = (Rectangle) o;
+        return height == a.height && width == a.width;
     }
 }

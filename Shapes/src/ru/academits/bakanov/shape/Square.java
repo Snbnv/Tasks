@@ -42,7 +42,7 @@ public class Square implements Shape {
     public int hashCode() {
         final int prime = 18;
         int hash = 1;
-        hash = hash * prime + (int) sideLength;
+        hash = hash * prime + Double.hashCode(sideLength);
         return hash;
     }
 
@@ -54,7 +54,7 @@ public class Square implements Shape {
         if (o == null || o.getClass() != this.getClass()) {
             return false;
         }
-        Circle a = (Circle) o;
-        return getWidth() == a.getWidth() && getHeight() == a.getHeight();
+        Square a = (Square) o;
+        return sideLength == a.sideLength;
     }
 }

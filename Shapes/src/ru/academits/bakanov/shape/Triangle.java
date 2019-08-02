@@ -74,19 +74,24 @@ public class Triangle implements Shape {
     }
 
     public double getArea() {
-        return getWidth() * getHeight() / 2;
+        return Math.abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2;
     }
 
     public double getPerimeter() {
-        double side1 = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-        double side2 = Math.sqrt(Math.pow((x3 - x2), 2) + Math.pow((y3 - y2), 2));
-        double side3 = Math.sqrt(Math.pow((x3 - x1), 2) + Math.pow((y3 - y1), 2));
+        double side1 = getSide(x1, y1, x2, y2);
+        double side2 = getSide(x2, y2, x3, y3);
+        double side3 = getSide(x1, y1, x3, y3);
         return side1 + side2 + side3;
+    }
+
+    private double getSide(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
 
     @Override
     public String toString() {
-        return "треугольник с шириной: " + getWidth() +
+        return "треугольник с координатами вершин: (x1 : " + x1 + "; y1 :" + y1 + ") (x2 : " + x2 + "; y2 :" + y2 + ") (x3 : " + x3 + "; y3 : " + y3 + ")" +
+                ", с шириной: " + getWidth() +
                 ", высотой: " + getHeight() +
                 ", полщадью: " + getArea() +
                 ", периметром: " + getPerimeter();
@@ -96,7 +101,7 @@ public class Triangle implements Shape {
     public int hashCode() {
         final int prime = 13;
         int hash = 1;
-        hash = hash * prime + (int) x1;
+        hash = hash * prime + Double.hashCode(x1);
         hash = hash * prime + Double.hashCode(y1);
         hash = hash * prime + Double.hashCode(x2);
         hash = hash * prime + Double.hashCode(y2);
@@ -113,7 +118,7 @@ public class Triangle implements Shape {
         if (o == null || o.getClass() != this.getClass()) {
             return false;
         }
-        Circle a = (Circle) o;
-        return getWidth() == a.getWidth() && getHeight() == a.getHeight();
+        Triangle a = (Triangle) o;
+        return x1 == a.x1 && y1 == a.y1 && x2 == a.x2 && y2 == a.y2 && x3 == a.x3 && y3 == a.y3;
     }
 }

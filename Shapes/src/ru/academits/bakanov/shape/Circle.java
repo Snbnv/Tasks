@@ -41,9 +41,9 @@ public class Circle implements Shape {
 
     @Override
     public int hashCode() {
-        final int prime = 13;
+        final int prime = 11;
         int hash = 1;
-        hash = hash * prime + (int) radius;
+        hash = hash * prime + Double.hashCode(radius);
         return hash;
     }
 
@@ -56,6 +56,6 @@ public class Circle implements Shape {
             return false;
         }
         Circle a = (Circle) o;
-        return getWidth() == a.getWidth() && getHeight() == a.getHeight();
+        return radius == a.radius;
     }
 }
