@@ -17,13 +17,13 @@ public class Main {
         Shape shape8 = new Circle(4.5);
 
         Shape maxAreaShape = getMaxAreaShape(shape1, shape2, shape3, shape4, shape5, shape6, shape7, shape8);
-        Shape maxPerimeterShape = getMaxPerimeterShape(shape1, shape2, shape3, shape4, shape5, shape6, shape7, shape8);
+        Shape secondPerimeterShape = getSecondPerimeterShape(shape1, shape2, shape3, shape4, shape5, shape6, shape7, shape8);
 
         System.out.print("Фигура с наибольшей площадью - ");
         System.out.println(maxAreaShape.toString());
 
         System.out.print("Фигура со вторым по величине периметром - ");
-        System.out.println(maxPerimeterShape.toString());
+        System.out.println(secondPerimeterShape.toString());
     }
 
     private static Shape getMaxAreaShape(Shape... shapes) {
@@ -31,7 +31,7 @@ public class Main {
         return shapes[shapes.length - 1];
     }
 
-    private static Shape getMaxPerimeterShape(Shape... shapes) {
+    private static Shape getSecondPerimeterShape(Shape... shapes) {
         Arrays.sort(shapes, new PerimeterComparator());
         return shapes[shapes.length - 2];
     }
