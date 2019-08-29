@@ -20,26 +20,26 @@ public class MainVector {
 
         System.out.println("Размерность вектора 3 = " + vector3.getSize());
 
-        vector3.Summ(vector4);
+        vector3.sum(vector4);
         System.out.println("Вектор 3 после сложение с вектором 4 = " + vector3.toString());
 
-        vector3.Different(vector4);
+        vector3.different(vector4);
         System.out.println("Вектор 3 после вычитания вектора 4 = " + vector3.toString());
 
-        vector3.SclProd(5);
+        vector3.scalarProduct(5);
         System.out.println("Вектор 3 скалярно умноженный на 5 = " + vector3.toString());
 
-        vector3.Turn();
+        vector3.turn();
         System.out.println("Вектор 3 после разворота = " + vector3.toString());
 
-        System.out.println("Длина вектора 3 = " + vector3.getModule());
+        System.out.println("Длина вектора 3 = " + vector3.getLength());
         System.out.println("3я компонента вектора 4 = " + vector4.getComponent(3));
         vector4.setComponent(3, 7.2);
         System.out.println("3я компонента вектора 4 теперь = " + vector4.getComponent(3));
 
-        System.out.println("Вектор получившийся при сложениии векторов 3 и 4 = " + Vector.Summ(vector3, vector4).toString());
-        System.out.println("Вектор получившийся при разности векторов 3 и 4 = " + Vector.Different(vector3, vector4).toString());
-        System.out.println("Вектор получившийся при произведении векторов 3 и 4 = " + Vector.SclProd(vector3, vector4).toString());
+        System.out.println("Вектор получившийся при сложениии векторов 3 и 4 = " + Vector.sum(vector3, vector4).toString());
+        System.out.println("Вектор получившийся при разности векторов 3 и 4 = " + Vector.different(vector3, vector4).toString());
+        System.out.println("Вектор получившийся при произведении векторов 3 и 4 = " + Vector.sclProd(vector3, vector4).toString());
 
         System.out.println("Хэшкод вектора 1 = " + vector1.hashCode());
         System.out.println("Хэшкод вектора 2 = " + vector2.hashCode());
