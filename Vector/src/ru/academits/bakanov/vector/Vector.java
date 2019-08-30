@@ -3,107 +3,100 @@ package ru.academits.bakanov.vector;
 import java.util.Arrays;
 
 public class Vector {
-    private double[] componentsOfVector;
+    private double[] components;
 
     public Vector(int n) throws IllegalAccessException {
         if (n <= 0) {
             throw new IllegalAccessException("длина вектора должна быть больше 0");
         }
-        this.componentsOfVector = new double[n];
+        this.components = new double[n];
         for (int i = 0; i < n; i++) {
-            this.componentsOfVector[i] = 0;
+            this.components[i] = 0;
         }
     }
 
-    public Vector(Vector v)  throws IllegalAccessException {
-        if (v.componentsOfVector.length <= 0) {
+    public Vector(Vector vector) throws IllegalAccessException {
+        if (vector.components.length <= 0) {
             throw new IllegalAccessException("длина вектора должна быть больше 0");
         }
-        this.componentsOfVector = Arrays.copyOf(v.componentsOfVector, v.componentsOfVector.length);
+        this.components = Arrays.copyOf(vector.components, vector.components.length);
     }
 
-    public Vector(double[] vector)  throws IllegalAccessException {
-        if (vector.length <= 0) {
+    public Vector(double[] components) throws IllegalAccessException {
+        if (components.length <= 0) {
             throw new IllegalAccessException("длина вектора должна быть больше 0");
         }
-        this.componentsOfVector = vector;
+        this.components = components;
     }
 
-    public Vector(int n, double[] v) throws IllegalAccessException {
+    public Vector(int n, double[] components) throws IllegalAccessException {
         if (n <= 0) {
             throw new IllegalAccessException("длина вектора должна быть больше 0");
         }
-
-        this.componentsOfVector = new double[n];
-
-        for (int i = 0; i < n; i++) {
-            if (i < v.length) {
-                this.componentsOfVector[i] = v[i];
-            } else {
-                this.componentsOfVector[i] = 0;
-            }
-        }
+        this.components = Arrays.copyOf(components, n);
     }
 
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("{");
-        for (int i = 0; i < componentsOfVector.length; i++){
-            if (i == componentsOfVector.length -1) {
-                s.append(componentsOfVector[i]);
+        for (int i = 0; i < components.length; i++) {
+            if (i == components.length - 1) {
+                s.append(Math.round(components[i] * 10.0) / 10.0);
                 s.append("}");
                 break;
             }
-            s.append(componentsOfVector[i]);
+            s.append(Math.round(components[i] * 10.0) / 10.0);
             s.append(", ");
         }
         return String.valueOf(s);
     }
 
     public int getSize() {
-        return this.componentsOfVector.length;
+        return this.components.length;
     }
 
-
-    public void sum(Vector v1) {
-        int size = Math.max(v1.getSize(), componentsOfVector.length);
-        this.componentsOfVector = new double[size];
-
-        for (int i = 0; i < size; i++) {
-            if (i > v1.getSize() && i <= componentsOfVector.length) {
-                componentsOfVector[i] = componentsOfVector[i] + 0;
+    public void sum(Vector vector) {
+        if (vector.components.length == this.components.length) {
+            for (int i = 0; i < this.components.length; i++) {
+                this.components[i] += vector.components[i];
             }
-            if (i > componentsOfVector.length && i <= v1.getSize()) {
-                componentsOfVector[i] = v1.componentsOfVector[i] + 0;
+        } else {
+            int size = Math.max(vector.components.length, this.components.length);
+            if (size > this.components.length) {
+                this.components = Arrays.copyOf(this.components, size);
             }
-            if (i < componentsOfVector.length && i < v1.getSize()) {
-                componentsOfVector[i] = componentsOfVector[i] + v1.componentsOfVector[i];
+            if (size > vector.components.length) {
+                vector.components = Arrays.copyOf(vector.components, size);
+            }
+            for (int i = 0; i < size; i++) {
+                this.components[i] += vector.components[i];
             }
         }
-        
     }
 
-    public void different(Vector v1) {
-        int size = (v1.getSize() >= componentsOfVector.length) ? v1.getSize() : componentsOfVector.length;
-        this.componentsOfVector = new double[size];
-
-        for (int i = 0; i < size; i++) {
-            if (i > v1.getSize() && i <= componentsOfVector.length) {
-                componentsOfVector[i] = componentsOfVector[i] - 0;
+    public void different(Vector vector) {
+        if (vector.components.length == this.components.length) {
+            for (int i = 0; i < this.components.length; i++) {
+                this.components[i] -= vector.components[i];
             }
-            if (i > componentsOfVector.length && i <= v1.getSize()) {
-                componentsOfVector[i] = v1.componentsOfVector[i] - 0;
+        } else {
+            int size = Math.max(vector.components.length, this.components.length);
+            if (size > this.components.length) {
+                this.components = Arrays.copyOf(this.components, size);
             }
-            if (i < componentsOfVector.length && i < v1.getSize()) {
-                componentsOfVector[i] = componentsOfVector[i] - v1.componentsOfVector[i];
+            if (size > vector.components.length) {
+                vector.components = Arrays.copyOf(vector.components, size);
+            }
+            for (int i = 0; i < size; i++) {
+                this.components[i] -= vector.components[i];
             }
         }
     }
 
     public void scalarProduct(double a) {
-        for (int i = 0; i < componentsOfVector.length; i++) {
-            componentsOfVector[i] *= a;
+        for (int i = 0; i < this.components.length; i++) {
+            this.components[i] *= a;
         }
     }
 
@@ -113,25 +106,25 @@ public class Vector {
 
     public double getLength() {
         double length = 0;
-        for (double v : componentsOfVector) {
+        for (double v : this.components) {
             length = length + v * v;
         }
-        return Math.sqrt(length);
+        return Math.round(Math.sqrt(length) * 10.0) / 10.0;
     }
 
     public double getComponent(int i) {
-        return componentsOfVector[i];
+        return this.components[i];
     }
 
     public void setComponent(int i, double value) {
-        this.componentsOfVector[i] = value;
+        this.components[i] = value;
     }
 
     @Override
     public int hashCode() {
         final int prime = 13;
         int hash = 1;
-        hash = prime * hash + Arrays.hashCode(this.componentsOfVector);
+        hash = prime * hash + Arrays.hashCode(this.components);
         return hash;
     }
 
@@ -143,70 +136,37 @@ public class Vector {
         if (o == null || o.getClass() != this.getClass()) {
             return false;
         }
-        Vector v = (Vector) o;
-        if (this.componentsOfVector.length != v.componentsOfVector.length) {
+        Vector vector = (Vector) o;
+        if (this.components.length != vector.components.length) {
             return false;
         }
-        for (int i = 0; i < this.componentsOfVector.length; i++) {
-            if (this.componentsOfVector[i] != v.componentsOfVector[i]) {
+        for (int i = 0; i < this.components.length; i++) {
+            if (this.components[i] != vector.components[i]) {
                 return false;
             }
         }
         return true;
     }
 
-    public static Vector sum(Vector v1, Vector v2) throws IllegalAccessException {
-        int size = (v1.getSize() >= v2.getSize()) ? v1.getSize() : v2.getSize();
-        double[] v = new double[size];
-
-        for (int i = 0; i < size; i++) {
-            if (i > v1.getSize() && i <= v2.getSize()) {
-                v[i] = v2.componentsOfVector[i] + 0;
-            }
-            if (i > v2.getSize() && i <= v1.getSize()) {
-                v[i] = v1.componentsOfVector[i] + 0;
-            }
-            if (i < v2.getSize() && i < v1.getSize()) {
-                v[i] = v1.componentsOfVector[i] + v2.componentsOfVector[i];
-            }
-        }
-        return new Vector(size, v);
+    public static Vector sum(Vector vector1, Vector vector2) throws IllegalAccessException {
+        Vector vector = new Vector(vector1.components);
+        vector.sum(vector2);
+        return vector;
     }
 
-    public static Vector different(Vector v1, Vector v2) throws IllegalAccessException {
-        int size = (v1.getSize() >= v2.getSize()) ? v1.getSize() : v2.getSize();
-        double[] v = new double[size];
-
-        for (int i = 0; i < size; i++) {
-            if (i > v1.getSize() && i <= v2.getSize()) {
-                v[i] = v2.componentsOfVector[i] - 0;
-            }
-            if (i > v2.getSize() && i <= v1.getSize()) {
-                v[i] = v1.componentsOfVector[i] - 0;
-            }
-            if (i < v2.getSize() && i < v1.getSize()) {
-                v[i] = v1.componentsOfVector[i] - v2.componentsOfVector[i];
-            }
-        }
-        return new Vector(size, v);
+    public static Vector different(Vector vector1, Vector vector2) throws IllegalAccessException{
+        Vector vector = new Vector(vector1.components);
+        vector.different(vector2);
+        return vector;
     }
 
-    public static Vector sclProd(Vector v1, Vector v2) throws IllegalAccessException {
-        int size = (v1.getSize() >= v2.getSize()) ? v1.getSize() : v2.getSize();
-        double[] v = new double[size];
+    public static double scalarProduct(Vector vector1, Vector vector2) {
+        double scalarProduct = 0;
 
-        for (int i = 0; i < size; i++) {
-            if (i > v1.getSize() && i <= v2.getSize()) {
-                v[i] = v2.componentsOfVector[i] * 0;
-            }
-            if (i > v2.getSize() && i <= v1.getSize()) {
-                v[i] = v1.componentsOfVector[i] * 0;
-            }
-            if (i < v2.getSize() && i < v1.getSize()) {
-                v[i] = v1.componentsOfVector[i] * v2.componentsOfVector[i];
-            }
+        for (int i = 0; i < vector1.components.length; i++) {
+            scalarProduct += vector1.components[i] * vector2.components[i];
         }
-        return new Vector(size, v);
+        return Math.round(scalarProduct * 10.0) / 10.0;
     }
 }
 

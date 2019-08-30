@@ -1,22 +1,28 @@
 package ru.academits.bakanov.mainvector;
 import ru.academits.bakanov.vector.*;
 
+import static ru.academits.bakanov.vector.Vector.scalarProduct;
+
 public class MainVector {
     public static void main (String[] args) throws IllegalAccessException {
         int n = 5;
-        double[] vector = new double[]{1, 3.2, 5, 6.1};
+        double[] vector = new double[] {1, 3.2, 5, 6.1, 8, 9};
+        double[] vector11 = new double[] {14, 5, 3, 12};
 
         Vector vector1 = new Vector(n);
         System.out.println("Вектор 1 = " + vector1.toString());
 
         Vector vector2 = new Vector(vector1);
-        System.out.println("Вектор 3 = " + vector2.toString());
+        System.out.println("Вектор 2 = " + vector2.toString());
 
         Vector vector3 = new Vector(vector);
         System.out.println("Вектор 3 = " + vector3.toString());
 
-        Vector vector4 = new Vector(n, vector);
+        Vector vector4 = new Vector(vector11);
         System.out.println("Вектор 4 = " + vector4.toString());
+
+        Vector vector5 = new Vector(n, vector);
+        System.out.println("Вектор 5 = " + vector5.toString());
 
         System.out.println("Размерность вектора 3 = " + vector3.getSize());
 
@@ -39,7 +45,7 @@ public class MainVector {
 
         System.out.println("Вектор получившийся при сложениии векторов 3 и 4 = " + Vector.sum(vector3, vector4).toString());
         System.out.println("Вектор получившийся при разности векторов 3 и 4 = " + Vector.different(vector3, vector4).toString());
-        System.out.println("Вектор получившийся при произведении векторов 3 и 4 = " + Vector.sclProd(vector3, vector4).toString());
+        System.out.println("Произведении векторов 3 и 4 = " + scalarProduct(vector3, vector4));
 
         System.out.println("Хэшкод вектора 1 = " + vector1.hashCode());
         System.out.println("Хэшкод вектора 2 = " + vector2.hashCode());
