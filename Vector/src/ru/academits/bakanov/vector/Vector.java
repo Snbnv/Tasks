@@ -53,7 +53,7 @@ public class Vector {
         return components.length;
     }
 
-    public void sum(Vector vector) {
+    public void addUp(Vector vector) {
         int size = Math.max(vector.components.length, components.length);
         if (size > components.length) {
             components = Arrays.copyOf(components, size);
@@ -66,7 +66,7 @@ public class Vector {
         }
     }
 
-    public void different(Vector vector) {
+    public void subtract(Vector vector) {
         int size = Math.max(vector.components.length, components.length);
         if (size > components.length) {
             components = Arrays.copyOf(components, size);
@@ -135,13 +135,13 @@ public class Vector {
 
     public static Vector getSum(Vector vector1, Vector vector2) {
         Vector vector = new Vector(vector1.components);
-        vector.sum(vector2);
+        vector.addUp(vector2);
         return vector;
     }
 
     public static Vector getDifferent(Vector vector1, Vector vector2) {
         Vector vector = new Vector(vector1.components);
-        vector.different(vector2);
+        vector.subtract(vector2);
         return vector;
     }
 
