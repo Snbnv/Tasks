@@ -9,9 +9,6 @@ public class Range {
         this.to = to;
     }
 
-    public Range() {
-    }
-
     public double getFrom() {
         return from;
     }
@@ -36,42 +33,30 @@ public class Range {
         return (x >= from && x <= to);
     }
 
-    public Range getIntersection(Range r1, Range r2) {
-        if (r1.to < r2.from || r2.to < r1.from) {
+    public Range getIntersection(Range range) {
+
+        if (range.to <= from || to <= range.from) {
             return null;
         } else {
-            Range rangeIntersection = new Range();
-            rangeIntersection.from = r1.from <= r2.from ? r2.from : r1.from;
-            rangeIntersection.to = r1.to <= r2.to ? r1.to : r2.to;
-            return rangeIntersection;
+            return new Range(Math.max(range.from, from), Math.min(range.to, to));
         }
     }
 
-    public Range[] getUnion(Range r1, Range r2) {
-        if (r1.to < r2.from || r2.to < r1.from) {
-            return new Range[]{r1, r2};
+    public Range[] getUnion(Range range) {
+        if (range.to < from || to < range.from) {
+            return new Range[]{range, this};
         } else {
-            Range rangeUnion = new Range();
-            rangeUnion.from = r1.from <= r2.from ? r1.from : r2.from;
-            rangeUnion.to = r1.to <= r2.to ? r2.to : r1.to;
-            return new Range[]{rangeUnion};
+            return new Range[]{new Range(Math.min(range.from, from), Math.max(range.to, to))};
         }
     }
 
-    public Range[] getDifference(Range r1, Range r2) {
-        if (r1.to < r2.from || r2.to < r1.from) {
-            return new Range[]{r1};
-        } else if (r1.isInside(r2.from) && r1.isInside(r2.to)) {
-            Range part1 = new Range();
-            Range part2 = new Range();
-            part1.from = r1.from;
-            part1.to = r2.from;
-            part2.from = r2.to;
-            part2.to = r1.to;
-            return new Range[]{part1, part2};
+    public Range[] getDifference(Range range) {
+        if (to <= range.from) {
+            return new Range[]{this};
+        } else if (from < range.from && to > range.to) {
+            return new Range[]{new Range(from, range.from), new Range(range.to, to)};
         } else {
-            Range rangeDifference = new Range(r1.from, r2.from);
-            return new Range[]{rangeDifference};
+            return new Range[]{new Range(from, range.from)};
         }
     }
 }
