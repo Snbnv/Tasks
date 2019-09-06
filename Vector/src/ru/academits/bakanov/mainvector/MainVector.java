@@ -1,10 +1,9 @@
 package ru.academits.bakanov.mainvector;
 import ru.academits.bakanov.vector.*;
-
-import static ru.academits.bakanov.vector.Vector.scalarProduct;
+import static ru.academits.bakanov.vector.Vector.getScalarProduct;
 
 public class MainVector {
-    public static void main (String[] args) throws IllegalAccessException {
+    public static void main (String[] args) {
         int n = 5;
         double[] vector = new double[] {1, 3.2, 5, 6.1, 8, 9};
         double[] vector11 = new double[] {14, 5, 3, 12};
@@ -32,7 +31,7 @@ public class MainVector {
         vector3.different(vector4);
         System.out.println("Вектор 3 после вычитания вектора 4 = " + vector3.toString());
 
-        vector3.scalarProduct(5);
+        vector3.scalarMultiplication(5);
         System.out.println("Вектор 3 скалярно умноженный на 5 = " + vector3.toString());
 
         vector3.turn();
@@ -43,9 +42,9 @@ public class MainVector {
         vector4.setComponent(3, 7.2);
         System.out.println("3я компонента вектора 4 теперь = " + vector4.getComponent(3));
 
-        System.out.println("Вектор получившийся при сложениии векторов 3 и 4 = " + Vector.sum(vector3, vector4).toString());
-        System.out.println("Вектор получившийся при разности векторов 3 и 4 = " + Vector.different(vector3, vector4).toString());
-        System.out.println("Произведении векторов 3 и 4 = " + scalarProduct(vector3, vector4));
+        System.out.println("Вектор получившийся при сложениии векторов 3 и 4 = " + Vector.getSum(vector3, vector4).toString());
+        System.out.println("Вектор получившийся при разности векторов 3 и 4 = " + Vector.getDifferent(vector3, vector4).toString());
+        System.out.println("Произведении векторов 3 и 4 = " + getScalarProduct(vector3, vector4));
 
         System.out.println("Хэшкод вектора 1 = " + vector1.hashCode());
         System.out.println("Хэшкод вектора 2 = " + vector2.hashCode());
