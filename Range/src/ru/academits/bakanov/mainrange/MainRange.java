@@ -1,8 +1,8 @@
-package ru.academits.bakanov.userange;
+package ru.academits.bakanov.mainrange;
 
 import ru.academits.bakanov.range.Range;
 
-class UseRange {
+class MainRange {
     public static void main(String[] args) {
         Range range1 = new Range(1, 15);
         Range range2 = new Range(5, 10);
