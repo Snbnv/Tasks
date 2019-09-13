@@ -33,11 +33,11 @@ public class ArrayListHome {
         ArrayList<Integer> initialList = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
         ArrayList<Integer> newList = new ArrayList<>(initialList.size());
 
-        initialList.forEach(str -> {
-            if (newList.indexOf(str) == -1) {
-                newList.add(str);
+        for (Integer i : initialList) {
+            if (newList.indexOf(i) == -1) {
+                newList.add(i);
             }
-        });
+        }
 
         System.out.println(initialList + " размер = " + initialList.size());
         System.out.println(newList + " размер = " + newList.size());
