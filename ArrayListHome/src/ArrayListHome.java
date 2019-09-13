@@ -6,11 +6,13 @@ public class ArrayListHome {
     public static void main(String[] args) throws FileNotFoundException {
         // 1й пункт
         try (Scanner scanner = new Scanner(new FileInputStream("File.txt"))) {
-            ArrayList<String> line = new ArrayList<>();
+            ArrayList<String> text = new ArrayList<>();
+
             while (scanner.hasNextLine()) {
-                line.add(scanner.nextLine());
+                text.add(scanner.nextLine());
             }
-            for (String s : line) {
+
+            for (String s : text) {
                 System.out.println(s);
             }
         }
@@ -29,21 +31,14 @@ public class ArrayListHome {
 
         // 3й пункт
         ArrayList<Integer> initialList = new ArrayList<>(Arrays.asList(1, 5, 2, 1, 3, 5));
+        ArrayList<Integer> newList = new ArrayList<>(initialList.size());
 
-        ArrayList<Integer> newList = new ArrayList<>(initialList);
-
-        for (int i = 0; i < newList.size(); ++i) {
-            for (int j = i + 1; j < newList.size(); ++j) {
-                if (newList.get(i).equals(newList.get(j))) {
-                    newList.remove(j);
-                    --j;
-                }
+        initialList.forEach(str -> {
+            if (newList.indexOf(str) == -1) {
+                newList.add(str);
             }
-        }
-        /*
-        или так
-        ArrayList<Integer> newList = new ArrayList<>(new LinkedHashSet<>(initialList));
-        */
+        });
+
         System.out.println(initialList + " размер = " + initialList.size());
         System.out.println(newList + " размер = " + newList.size());
     }
