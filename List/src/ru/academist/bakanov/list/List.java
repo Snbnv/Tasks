@@ -4,11 +4,12 @@ public class List<T> {
     private ListItem<T> head;
     private int count;
 
-    public List(){
+    public List() {
         head = null;
         count = 0;
     }
-    public int getSize(){
+
+    public int getSize() {
         return count;
     }
 
@@ -16,10 +17,10 @@ public class List<T> {
         return head.getData();
     }
 
-    public Object getItem(int index){
+    public Object getItem(int index) {
         int i = 0;
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
-            if (i == index){
+            if (i == index) {
                 return p.getData();
             }
             i++;
@@ -27,7 +28,7 @@ public class List<T> {
         return null;
     }
 
-    public void setItem(int index, T data){
+    public void setItem(int index, T data) {
         int i = 0;
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
@@ -40,13 +41,30 @@ public class List<T> {
         }
     }
 
-    public void remove(int index){
+    public void remove(int index) {
         int i = 0;
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
-            if (i == index-1) {
-                p = p.getNext();
-                count --;
-                System.out.println("элемент под индексом " + index + " удален");
+            if (i == index) {
+                ListItem<T> next = p.getNext();
+                System.out.println("элемент " + p.getData() + " под индексом " + index + " удален");
+                p.setNext(next.getNext());
+                p.setData(next.getData());
+                count--;
+
+                break;
+            }
+            i++;
+        }
+    }
+
+    public void push(int index, T data) {
+        int i = 0;
+        for (ListItem<T> p = head; p != null; p = p.getNext()) {
+            if (i == index - 1) {
+                ListItem<T> next = new ListItem<>(data, p.getNext());
+                p.setNext(next);
+                System.out.println("Добавлен элемент " + p.getData() + " под индексом " + index);
+                count++;
                 break;
             }
             i++;
@@ -56,10 +74,10 @@ public class List<T> {
     public void pushHead(T data) {
         ListItem<T> p = new ListItem<>(data, head);
         head = p;
-        count ++;
+        count++;
     }
 
-    public void print(){
+    public void print() {
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             System.out.println(p.getData());
         }

@@ -20,10 +20,10 @@ public class MainList {
         System.out.printf("Элемент списка под индексом %d равен %d%n", 3, list.getItem(3));
         list.setItem(2, 22);
         list.remove(4);
+        list.push(3, 14);
 
         list.print();
         System.out.println("Размер списка  = " + list.getSize());
-
 
 
     }
