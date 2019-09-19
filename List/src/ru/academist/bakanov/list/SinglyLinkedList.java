@@ -1,10 +1,10 @@
 package ru.academist.bakanov.list;
 
-public class List<T> {
+public class SinglyLinkedList<T> {
     private ListItem<T> head;
     private int count;
 
-    public List() {
+    public SinglyLinkedList() {
         head = null;
         count = 0;
     }
@@ -19,17 +19,20 @@ public class List<T> {
 
     public T getItem(int index) {
         int i = 0;
+
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
                 return p.getData();
             }
             i++;
         }
+
         return null;
     }
 
     public T setItem(int index, T data) {
         int i = 0;
+
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
                 T oldData = p.getData();
@@ -38,11 +41,13 @@ public class List<T> {
             }
             i++;
         }
+
         return null;
     }
 
     public T removeByIndex(int index) {
         int i = 0;
+
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
                 ListItem<T> next = p.getNext();
@@ -54,32 +59,34 @@ public class List<T> {
             }
             i++;
         }
+
         return null;
     }
 
     public void addHead(T data) {
-        ListItem<T> p = new ListItem<>(data, head);
-        head = p;
+        head = new ListItem<>(data, head);
         count++;
     }
 
     public void add(int index, T data) {
         int i = 0;
+
         if (index == 0) {
             addHead(data);
             System.out.println("В начало списка вставлен элемент со сзначением " + data);
         } else {
             for (ListItem<T> p = head; p != null; p = p.getNext()) {
-                if (i == index) {
-                    ListItem<T> next = new ListItem<>(data, p.getNext());
-                    p.setNext(next);
-                    count++;
-                    break;
-                }
                 if (p.getNext() == null && i <= index) {
                     ListItem<T> next = new ListItem<>(data, null);
                     p.setNext(next);
                     System.out.println("В конец списка вставлен элемент со сзначением " + data);
+                    count++;
+                    break;
+                }
+                if (i == index - 1) {
+                    ListItem<T> next = new ListItem<>(data, p.getNext());
+                    p.setNext(next);
+                    System.out.println("Вставлен элемент под индексом " + index + " со сзначением " + data);
                     count++;
                     break;
                 }
@@ -106,27 +113,33 @@ public class List<T> {
     public T removeHead() {
         T oldData = head.getData();
         head = head.getNext();
+
         count--;
+
         return oldData;
     }
 
     public void turn() {
         for (ListItem<T> p = head, prev = null; p != null; ) {
             ListItem<T> next = p.getNext();
+
             if (next == null) {
                 head = p;
             }
+
             p.setNext(prev);
             prev = p;
             p = next;
         }
     }
 
-    public List copy() {
-        List<T> node = new List<>();
+    public SinglyLinkedList copy() {
+        SinglyLinkedList<T> node = new SinglyLinkedList<>();
+
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             node.addHead(p.getData());
         }
+
         node.turn();
         return node;
     }
