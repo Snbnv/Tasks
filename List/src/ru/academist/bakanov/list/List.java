@@ -13,11 +13,11 @@ public class List<T> {
         return count;
     }
 
-    public Object getHead() {
+    public T getHead() {
         return head.getData();
     }
 
-    public Object getItem(int index) {
+    public T getItem(int index) {
         int i = 0;
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
@@ -28,53 +28,107 @@ public class List<T> {
         return null;
     }
 
-    public void setItem(int index, T data) {
+    public T setItem(int index, T data) {
         int i = 0;
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
                 T oldData = p.getData();
                 p.setData(data);
-                System.out.println("Значение элемента под индексом " + index + " изменено с " + oldData + " на " + p.getData());
-                break;
+                return oldData;
             }
             i++;
         }
+        return null;
     }
 
-    public void remove(int index) {
+    public T removeByIndex(int index) {
         int i = 0;
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
                 ListItem<T> next = p.getNext();
-                System.out.println("элемент " + p.getData() + " под индексом " + index + " удален");
+                T removeData = p.getData();
                 p.setNext(next.getNext());
                 p.setData(next.getData());
                 count--;
-
-                break;
+                return removeData;
             }
             i++;
         }
+        return null;
     }
 
-    public void push(int index, T data) {
-        int i = 0;
-        for (ListItem<T> p = head; p != null; p = p.getNext()) {
-            if (i == index - 1) {
-                ListItem<T> next = new ListItem<>(data, p.getNext());
-                p.setNext(next);
-                System.out.println("Добавлен элемент " + p.getData() + " под индексом " + index);
-                count++;
-                break;
-            }
-            i++;
-        }
-    }
-
-    public void pushHead(T data) {
+    public void addHead(T data) {
         ListItem<T> p = new ListItem<>(data, head);
         head = p;
         count++;
+    }
+
+    public void add(int index, T data) {
+        int i = 0;
+        if (index == 0) {
+            addHead(data);
+            System.out.println("В начало списка вставлен элемент со сзначением " + data);
+        } else {
+            for (ListItem<T> p = head; p != null; p = p.getNext()) {
+                if (i == index) {
+                    ListItem<T> next = new ListItem<>(data, p.getNext());
+                    p.setNext(next);
+                    count++;
+                    break;
+                }
+                if (p.getNext() == null && i <= index) {
+                    ListItem<T> next = new ListItem<>(data, null);
+                    p.setNext(next);
+                    System.out.println("В конец списка вставлен элемент со сзначением " + data);
+                    count++;
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+
+    public boolean removeByData(T data) {
+        for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
+            if (p.getData().equals(data)) {
+                if (prev != null) {
+                    prev.setNext(p.getNext());
+                } else {
+                    head = head.getNext();
+                }
+                count--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public T removeHead() {
+        T oldData = head.getData();
+        head = head.getNext();
+        count--;
+        return oldData;
+    }
+
+    public void turn() {
+        for (ListItem<T> p = head, prev = null; p != null; ) {
+            ListItem<T> next = p.getNext();
+            if (next == null) {
+                head = p;
+            }
+            p.setNext(prev);
+            prev = p;
+            p = next;
+        }
+    }
+
+    public List copy() {
+        List<T> node = new List<>();
+        for (ListItem<T> p = head; p != null; p = p.getNext()) {
+            node.addHead(p.getData());
+        }
+        node.turn();
+        return node;
     }
 
     public void print() {
