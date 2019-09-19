@@ -19,20 +19,20 @@ public class SinglyLinkedList<T> {
 
     public T getItem(int index) {
         int i = 0;
-
+        //TODO добавить проверку индекса?
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
                 return p.getData();
             }
             i++;
         }
-
+        //TODO сообщение о неверных данных?
         return null;
     }
 
     public T setItem(int index, T data) {
         int i = 0;
-
+        //TODO добавить проверку входных данных?
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
                 T oldData = p.getData();
@@ -41,13 +41,13 @@ public class SinglyLinkedList<T> {
             }
             i++;
         }
-
+        //TODO добавить сообщение про не корректные входные данные?
         return null;
     }
 
     public T removeByIndex(int index) {
         int i = 0;
-
+        //TODO добавить проверку входных данных?
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
             if (i == index) {
                 ListItem<T> next = p.getNext();
@@ -59,7 +59,7 @@ public class SinglyLinkedList<T> {
             }
             i++;
         }
-
+        //TODO добавить сообщение про не корректные входные данные?
         return null;
     }
 
