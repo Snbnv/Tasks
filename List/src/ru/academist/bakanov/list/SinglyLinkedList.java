@@ -18,48 +18,70 @@ public class SinglyLinkedList<T> {
     }
 
     public T getItem(int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("Индекс не может быть отрицательным числом");
+        }
+        if (index > getSize() - 1){
+            throw new IllegalArgumentException("Элемента с индексом " + index + " нет в списке");
+        }
+
         int i = 0;
-        //TODO добавить проверку индекса?
-        for (ListItem<T> p = head; p != null; p = p.getNext()) {
+
+        for (ListItem<T> p = head; p != null; p = p.getNext(), i++) {
             if (i == index) {
                 return p.getData();
             }
-            i++;
         }
-        //TODO сообщение о неверных данных?
+
         return null;
     }
 
     public T setItem(int index, T data) {
+        if (index < 0) {
+            throw new IllegalArgumentException("Индекс не может быть отрицательным числом");
+        }
+        if (index > getSize() - 1){
+            throw new IllegalArgumentException("Элемента с индексом " + index + " нет в списке");
+        }
+
         int i = 0;
-        //TODO добавить проверку входных данных?
-        for (ListItem<T> p = head; p != null; p = p.getNext()) {
+
+        for (ListItem<T> p = head; p != null; p = p.getNext(), i++) {
             if (i == index) {
                 T oldData = p.getData();
                 p.setData(data);
+
                 return oldData;
             }
-            i++;
         }
-        //TODO добавить сообщение про не корректные входные данные?
+
         return null;
     }
 
     public T removeByIndex(int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException("Индекс не может быть отрицательным числом");
+        }
+        if (index > getSize() - 1){
+            throw new IllegalArgumentException("Элемента с индексом " + index + " нет в списке");
+        }
+
         int i = 0;
-        //TODO добавить проверку входных данных?
-        for (ListItem<T> p = head; p != null; p = p.getNext()) {
+
+        for (ListItem<T> p = head; p != null; p = p.getNext(), i++) {
             if (i == index) {
                 ListItem<T> next = p.getNext();
                 T removeData = p.getData();
+
                 p.setNext(next.getNext());
                 p.setData(next.getData());
+
                 count--;
+
                 return removeData;
             }
-            i++;
         }
-        //TODO добавить сообщение про не корректные входные данные?
+
         return null;
     }
 
@@ -69,28 +91,40 @@ public class SinglyLinkedList<T> {
     }
 
     public void add(int index, T data) {
+        if (index < 0) {
+            throw new IllegalArgumentException("Индекс не может быть отрицательным числом");
+        }
+        if (index > getSize() - 1){
+            throw new IllegalArgumentException("Элемента с индексом " + index + " нет в списке");
+        }
+
         int i = 0;
 
         if (index == 0) {
             addHead(data);
             System.out.println("В начало списка вставлен элемент со сзначением " + data);
         } else {
-            for (ListItem<T> p = head; p != null; p = p.getNext()) {
+            for (ListItem<T> p = head; p != null; p = p.getNext(), i++) {
                 if (p.getNext() == null && i <= index) {
                     ListItem<T> next = new ListItem<>(data, null);
                     p.setNext(next);
+
                     System.out.println("В конец списка вставлен элемент со сзначением " + data);
+
                     count++;
+
                     break;
                 }
                 if (i == index - 1) {
                     ListItem<T> next = new ListItem<>(data, p.getNext());
                     p.setNext(next);
-                    System.out.println("Вставлен элемент под индексом " + index + " со сзначением " + data);
+
+                    System.out.println("Вставлен элемент c индексом " + index + " и значением " + data);
+
                     count++;
+
                     break;
                 }
-                i++;
             }
         }
     }
@@ -103,10 +137,13 @@ public class SinglyLinkedList<T> {
                 } else {
                     head = head.getNext();
                 }
+
                 count--;
+
                 return true;
             }
         }
+
         return false;
     }
 

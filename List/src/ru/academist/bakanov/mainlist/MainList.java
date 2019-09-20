@@ -19,23 +19,23 @@ public class MainList {
         System.out.println("Размер списка  равен " + list.getSize());
 
         int index = 3;
-        System.out.println("Элемент списка под индексом " + index + " равен " + list.getItem(index));
+        System.out.println("Элемент списка с индексом " + index + " равен " + list.getItem(index));
 
         int index2 = 2;
         Integer data = 22;
-        System.out.println("Значение элемента под индексом " + index2 + " изменено с " + list.setItem(index2, data) + " на " + data);
+        System.out.println("Значение элемента с индексом " + index2 + " изменено с " + list.setItem(index2, data) + " на " + data);
 
         int index3 = 4;
-        System.out.println("Удален элемент под индексом " + index3 + " со значением " + list.removeByIndex(index3));
+        System.out.println("Удален элемент с индексом " + index3 + " и значением " + list.removeByIndex(index3));
 
         list.add(3, 14);
 
         Integer data2 = 11;
-        System.out.println("Удаление элемента со значением " + data2 + " -> " + list.removeByData(data2));
+        System.out.println("Элемента со значением " + data2 + " удален = " + list.removeByData(data2));
 
         System.out.println("Удален первый элемент со значением " + list.removeHead());
 
-        System.out.println("Получившийся список");
+        System.out.println("Итоговый список");
         list.print();
         System.out.println("Размер списка  = " + list.getSize());
 
