@@ -14,10 +14,26 @@ public class MainConverter {
             JPanel panel = new JPanel();
             JTextField enterData = new JTextField(10);
             enterData.setHorizontalAlignment(JTextField.CENTER);
+            enterData.setSize(10, 20);
+            JTextField kcData = new JTextField(10);
+            kcData.setHorizontalAlignment(JTextField.CENTER);
+            kcData.setSize(10, 20);
+            JTextField fcData = new JTextField(10);
+            fcData.setHorizontalAlignment(JTextField.CENTER);
+            fcData.setSize(10, 20);
+            JComboBox ckf = new JComboBox();
+
+            ckf.addItem("Цельсий");
+            ckf.addItem("Кельвин");
+            ckf.addItem("Фаренгейт");
 
 
-            panel.setLayout(new GridLayout(2, 3 ,5 , 10));
-            panel.add(enterData);
+
+            panel.setLayout(new GridLayout(0,3,10,10));
+            panel.add(String.valueOf(new TitledBorder("sdg")), enterData);
+            panel.add(kcData);
+            panel.add(fcData);
+            panel.add(ckf);
             converter.setContentPane(panel);
 
             converter.setResizable(false);
