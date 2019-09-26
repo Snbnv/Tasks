@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class MainConverter extends JFrame {
+public class TemperatureConverter extends JFrame {
     private static String celsius = "\u2103";
     private static String kelvin = "\u00b0K";
     private static String fahrenheit = "\u2109";
