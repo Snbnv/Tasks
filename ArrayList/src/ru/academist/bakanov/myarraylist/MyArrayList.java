@@ -12,14 +12,13 @@ public class MyArrayList<E> implements List<E> {
         items = (E[]) new Object[10];
     }
 
-    public MyArrayList(E[] items) {
-        this.items = items;
-        this.size = items.length;
-    }
-
-    public MyArrayList(int capacity) {
-        //noinspection unchecked
-        items = (E[]) new Object[capacity];
+    public MyArrayList(int initialCapacity) {
+        if (initialCapacity >= 0) {
+            //noinspection unchecked
+            items = (E[]) new Object[initialCapacity];
+        } else {
+            throw new IllegalArgumentException("Capacity can't be a negative");
+        }
     }
 
     @Override //rdy
@@ -32,9 +31,9 @@ public class MyArrayList<E> implements List<E> {
         return size == 0;
     }
 
-    @Override //not rdy
+    @Override // rdy??
     public boolean contains(Object o) {
-        return false;
+        return indexOf(o) >= 0;
     }
 
     @Override //rdy
@@ -42,87 +41,210 @@ public class MyArrayList<E> implements List<E> {
         return new MyIterator();
     }
 
-    @Override //not rdy
+    @Override //rdy??
     public Object[] toArray() {
-        return new Object[0];
+        return Arrays.copyOf(items, size);
     }
 
-    @Override //not rdy
-    public <T> T[] toArray(T[] a) {
-        return null;
+    @Override //rdy??
+    public <T> T[] toArray(T[] items) {
+        if (items.length < size) {
+            //noinspection unchecked
+            return (T[]) Arrays.copyOf(this.items, size, items.getClass());
+        }
+        //noinspection SuspiciousSystemArraycopy
+        System.arraycopy(this.items, 0, items, 0, size);
+        if (items.length > size) {
+            items[size] = null;
+        }
+        return items;
     }
 
-    /*@Override
-    public boolean add(E e) {
-        return false;
-    }*/
-
-    @Override //not rdy
+    @Override // rdy??
     public boolean remove(Object o) {
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (items[i] == null) {
+                    System.arraycopy(items, i + 1, items, i, size - i);
+                    items[size] = null;
+                    ++modCount;
+                    --size;
+                    return true;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++)
+                if (o.equals(items[i])) {
+                    System.arraycopy(items, i + 1, items, i, size - i);
+                    items[size] = null;
+                    ++modCount;
+                    --size;
+                    return true;
+                }
+        }
         return false;
     }
 
-    @Override //not rdy
+    @Override // rdy??
     public boolean containsAll(Collection<?> c) {
-        return false;
+        Object[] items = c.toArray();
+        for (int i = 0; i < c.size(); i++) {
+            if (!contains(items[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    @Override //not rdy
+    @Override // rdy??
     public boolean addAll(Collection<? extends E> c) {
-        return false;
+        Object[] newItems = c.toArray();
+        int newSize = newItems.length;
+        while (items.length < newSize + size) {
+            ensureCapacity(size + newSize);
+        }
+        //noinspection SuspiciousSystemArraycopy
+        System.arraycopy(newItems, 0, items, size, newSize);
+        size = size + newSize;
+        ++modCount;
+        return true;
     }
 
-    @Override //not rdy
-    public boolean addAll(int index, Collection<? extends E> c) {
-        return false;
+    @Override // rdy??
+    public boolean addAll(int i, Collection<? extends E> c) {
+        if (i < 0) {
+            throw new IllegalArgumentException("Index can't be a negative number");
+        }
+        if (i >= size) {
+            throw new NullPointerException("Item with index " + i + " not on the list");
+        }
+
+        Object[] newItems = c.toArray();
+        int newSize = newItems.length;
+        while (items.length < newSize + size) {
+            ensureCapacity(size + newSize);
+        }
+
+        int numMoved = size - i;
+        if (numMoved > 0) {
+            System.arraycopy(items, i, items, i + newSize, numMoved);
+        }
+        //noinspection SuspiciousSystemArraycopy
+        System.arraycopy(newItems, 0, items, i, newSize);
+
+        size = size + newSize;
+        ++modCount;
+        return true;
     }
 
-    @Override //not rdy
+    @Override // rdy??
     public boolean removeAll(Collection<?> c) {
-        return false;
+        Objects.requireNonNull(c);
+        final Object[] es = items;
+        int r;
+        // Optimize for initial run of survivors
+        for (r = 0; ; r++) {
+            if (r == size)
+                return false;
+            if (c.contains(es[r]))
+                break;
+        }
+        int w = r++;
+        try {
+            for (Object e; r < size; r++)
+                if (!c.contains(e = es[r]))
+                    es[w++] = e;
+        } catch (Throwable ex) {
+            // Preserve behavioral compatibility with AbstractCollection,
+            // even if c.contains() throws.
+            System.arraycopy(es, r, es, w, size - r);
+            w += size - r;
+            throw ex;
+        } finally {
+            System.arraycopy(es, size, es, w, 0);
+            for (int to = size, i = (size -= size - w); i < to; i++)
+                es[i] = null;
+        }
+        ++modCount;
+        return true;
     }
 
-    @Override //not rdy
+    @Override // rdy??
     public boolean retainAll(Collection<?> c) {
-        return false;
+        Objects.requireNonNull(c);
+        final Object[] es = items;
+        int r;
+        // Optimize for initial run of survivors
+        for (r = 0; ; r++) {
+            if (r == size)
+                return false;
+            if (!c.contains(es[r]))
+                break;
+        }
+        int w = r++;
+        try {
+            for (Object e; r < size; r++)
+                if (c.contains(e = es[r]))
+                    es[w++] = e;
+        } catch (Throwable ex) {
+            // Preserve behavioral compatibility with AbstractCollection,
+            // even if c.contains() throws.
+            System.arraycopy(es, r, es, w, size - r);
+            w += size - r;
+            throw ex;
+        } finally {
+            System.arraycopy(es, size, es, w, 0);
+            for (int to = size, i = (size -= size - w); i < to; i++)
+                es[i] = null;
+        }
+        ++modCount;
+        return true;
     }
 
-    @Override //not rdy
+    @Override // rdy??
     public void clear() {
-
+        for (int i = size - 1; i >= 0; i--)
+            items[i] = null;
+        ++modCount;
     }
 
-    /*@Override
-    public E get(int index) {
-        return null;
-    }
-
-    @Override
-    public E set(int index, E element) {
-        return null;
-    }
-
-    @Override
-    public void add(int index, E element) {
-
-    }
-
-    @Override
-    public E remove(int index) {
-        return null;
-    }*/
-
-    @Override //not rdy
+    @Override // rdy??
     public int indexOf(Object o) {
-        return 0;
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (items[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (o.equals(items[i])) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
-    @Override //not rdy
+    @Override // rdy??
     public int lastIndexOf(Object o) {
-        return 0;
+        if (o == null) {
+            for (int i = size - 1; i >= 0; i--) {
+                if (items[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = size - 1; i >= 0; i--) {
+                if (o.equals(items[i])) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
-    @Override
+    @Override// rdy
     public E get(int i) {
         if (i < 0) {
             throw new IllegalArgumentException("Index can't be a negative number");
@@ -133,36 +255,39 @@ public class MyArrayList<E> implements List<E> {
         return items[i];
     }
 
-    @Override //not rdy
-    public void set(int i, E item) {
+    @Override // rdy
+    public E set(int i, E item) {
         if (i < 0) {
             throw new IllegalArgumentException("Index can't be a negative number");
         }
         if (i >= size) {
             throw new NullPointerException("Item with index " + i + " not on the list");
         }
-        for (Iterator<E> iterator = iterator(); iterator.hasNext(); )  {
-            if (iterator == items[i]){
-
-            }
-        }
+        E oldItem = items[i];
+        items[i] = item;
+        return oldItem;
     }
 
-    @Override
-    public void add(E item) {
+    @Override// rdy??
+    public boolean add(E item) {
         ensureCapacity(size);
         items[size] = item;
         ++size;
         ++modCount;
+        return true;
     }
 
-    @Override //not rdy
+    @Override // rdy??
     public void add(int i, E item) {
-        ensureCapacity(size);
-
-        if (iterator() == items[i]){
-
+        if (i < 0) {
+            throw new IllegalArgumentException("Index can't be a negative number");
         }
+        if (i >= size) {
+            throw new NullPointerException("Item with index " + i + " not on the list");
+        }
+        ensureCapacity(size);
+        System.arraycopy(items, i, items, i + 1, size - i);
+        items[i] = item;
         ++size;
         ++modCount;
     }
@@ -175,10 +300,11 @@ public class MyArrayList<E> implements List<E> {
         if (i >= size) {
             throw new NullPointerException("Item with index " + i + " not on the list");
         }
+        E oldItem = items[i];
         System.arraycopy(items, i + 1, items, i, size - i - 1);
         --size;
         ++modCount;
-        return null;
+        return oldItem;
     }
 
     private void ensureCapacity(int size) {
@@ -187,8 +313,8 @@ public class MyArrayList<E> implements List<E> {
         }
     }
 
-    public void trimToSize(){
-        if (!iterator().hasNext()){
+    public void trimToSize() {
+        if (size < items.length) {
             items = Arrays.copyOf(items, size);
         }
     }
@@ -210,6 +336,14 @@ public class MyArrayList<E> implements List<E> {
             }
             ++currentIndex;
             return items[currentIndex];
+        }
+
+    }
+
+    public void print() {
+        for (Iterator<E> i = iterator(); i.hasNext(); ) {
+            E item = i.next();
+            System.out.println(item);
         }
     }
 
