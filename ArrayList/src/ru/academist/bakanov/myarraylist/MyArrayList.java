@@ -173,6 +173,7 @@ public class MyArrayList<E> implements List<E> {
     public boolean retainAll(Collection<?> c) {
         Objects.requireNonNull(c);
         final Object[] es = items;
+        final int size = this.size;
         int r;
         // Optimize for initial run of survivors
         for (r = 0; ; r++) {
@@ -194,8 +195,10 @@ public class MyArrayList<E> implements List<E> {
             throw ex;
         } finally {
             System.arraycopy(es, size, es, w, 0);
-            for (int to = size, i = (size -= size - w); i < to; i++)
+            for (int to = size, i = (size -= size - w); i < to; i++){
                 es[i] = null;
+            }
+            this.size = c.toArray().length;
         }
         ++modCount;
         return true;
@@ -203,8 +206,10 @@ public class MyArrayList<E> implements List<E> {
 
     @Override // rdy??
     public void clear() {
-        for (int i = size - 1; i >= 0; i--)
+        for (int i = size - 1; i >= 0; i--) {
             items[i] = null;
+        }
+        size = 0;
         ++modCount;
     }
 
@@ -362,5 +367,3 @@ public class MyArrayList<E> implements List<E> {
         return null;
     }
 }
-
-
