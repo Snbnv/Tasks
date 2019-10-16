@@ -5,8 +5,6 @@ public class SinglyLinkedList<T> {
     private int count;
 
     public SinglyLinkedList() {
-        head = null;
-        count = 0;
     }
 
     public int getSize() {
@@ -21,7 +19,7 @@ public class SinglyLinkedList<T> {
         if (index < 0) {
             throw new IllegalArgumentException("Индекс не может быть отрицательным числом");
         }
-        if (index > getSize() - 1){
+        if (index >= count){
             throw new IllegalArgumentException("Элемента с индексом " + index + " нет в списке");
         }
 
@@ -40,7 +38,7 @@ public class SinglyLinkedList<T> {
         if (index < 0) {
             throw new IllegalArgumentException("Индекс не может быть отрицательным числом");
         }
-        if (index > getSize() - 1){
+        if (index >= count){
             throw new IllegalArgumentException("Элемента с индексом " + index + " нет в списке");
         }
 
@@ -62,7 +60,7 @@ public class SinglyLinkedList<T> {
         if (index < 0) {
             throw new IllegalArgumentException("Индекс не может быть отрицательным числом");
         }
-        if (index > getSize() - 1){
+        if (index >= count){
             throw new IllegalArgumentException("Элемента с индексом " + index + " нет в списке");
         }
 
@@ -94,7 +92,7 @@ public class SinglyLinkedList<T> {
         if (index < 0) {
             throw new IllegalArgumentException("Индекс не может быть отрицательным числом");
         }
-        if (index > getSize() - 1){
+        if (index >= count){
             throw new IllegalArgumentException("Элемента с индексом " + index + " нет в списке");
         }
 
