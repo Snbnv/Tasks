@@ -21,32 +21,32 @@ public class MyArrayList<E> implements List<E> {
         }
     }
 
-    @Override //rdy
+    @Override
     public int size() {
         return size;
     }
 
-    @Override //rdy
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override // rdy??
+    @Override
     public boolean contains(Object o) {
         return indexOf(o) >= 0;
     }
 
-    @Override //rdy
+    @Override
     public Iterator<E> iterator() {
         return new MyIterator();
     }
 
-    @Override //rdy??
+    @Override
     public Object[] toArray() {
         return Arrays.copyOf(items, size);
     }
 
-    @Override //rdy??
+    @Override
     public <T> T[] toArray(T[] items) {
         if (items.length < size) {
             //noinspection unchecked
@@ -60,7 +60,7 @@ public class MyArrayList<E> implements List<E> {
         return items;
     }
 
-    @Override // rdy??
+    @Override
     public boolean remove(Object o) {
         if (o == null) {
             for (int i = 0; i < size; i++) {
@@ -85,7 +85,7 @@ public class MyArrayList<E> implements List<E> {
         return false;
     }
 
-    @Override // rdy??
+    @Override
     public boolean containsAll(Collection<?> c) {
         Object[] items = c.toArray();
         for (int i = 0; i < c.size(); i++) {
@@ -96,7 +96,7 @@ public class MyArrayList<E> implements List<E> {
         return true;
     }
 
-    @Override // rdy??
+    @Override
     public boolean addAll(Collection<? extends E> c) {
         Object[] newItems = c.toArray();
         int newSize = newItems.length;
@@ -110,7 +110,7 @@ public class MyArrayList<E> implements List<E> {
         return true;
     }
 
-    @Override // rdy??
+    @Override
     public boolean addAll(int i, Collection<? extends E> c) {
         if (i < 0) {
             throw new IllegalArgumentException("Index can't be a negative number");
@@ -128,21 +128,25 @@ public class MyArrayList<E> implements List<E> {
         int numMoved = size - i;
         if (numMoved > 0) {
             System.arraycopy(items, i, items, i + newSize, numMoved);
+        } else {
+            //noinspection SuspiciousSystemArraycopy
+            System.arraycopy(newItems, 0, items, i, newSize);
         }
-        //noinspection SuspiciousSystemArraycopy
-        System.arraycopy(newItems, 0, items, i, newSize);
 
         size = size + newSize;
         ++modCount;
         return true;
     }
 
-    @Override // rdy??
+    @Override
     public boolean removeAll(Collection<?> c) {
-        Objects.requireNonNull(c);
-        final Object[] es = items;
+        if (c == null) {
+            throw new NullPointerException();
+        }
+
+        final Object[] es = this.items;
         int r;
-        // Optimize for initial run of survivors
+
         for (r = 0; ; r++) {
             if (r == size)
                 return false;
@@ -155,8 +159,6 @@ public class MyArrayList<E> implements List<E> {
                 if (!c.contains(e = es[r]))
                     es[w++] = e;
         } catch (Throwable ex) {
-            // Preserve behavioral compatibility with AbstractCollection,
-            // even if c.contains() throws.
             System.arraycopy(es, r, es, w, size - r);
             w += size - r;
             throw ex;
@@ -169,13 +171,15 @@ public class MyArrayList<E> implements List<E> {
         return true;
     }
 
-    @Override // rdy??
+    @Override
     public boolean retainAll(Collection<?> c) {
-        Objects.requireNonNull(c);
+        if (c == null) {
+            throw new NullPointerException();
+        }
+
         final Object[] es = items;
-        final int size = this.size;
         int r;
-        // Optimize for initial run of survivors
+
         for (r = 0; ; r++) {
             if (r == size)
                 return false;
@@ -188,14 +192,12 @@ public class MyArrayList<E> implements List<E> {
                 if (c.contains(e = es[r]))
                     es[w++] = e;
         } catch (Throwable ex) {
-            // Preserve behavioral compatibility with AbstractCollection,
-            // even if c.contains() throws.
             System.arraycopy(es, r, es, w, size - r);
             w += size - r;
             throw ex;
         } finally {
             System.arraycopy(es, size, es, w, 0);
-            for (int to = size, i = (size -= size - w); i < to; i++){
+            for (int to = size, i = (size -= size - w); i < to; i++) {
                 es[i] = null;
             }
             this.size = c.toArray().length;
@@ -204,7 +206,7 @@ public class MyArrayList<E> implements List<E> {
         return true;
     }
 
-    @Override // rdy??
+    @Override
     public void clear() {
         for (int i = size - 1; i >= 0; i--) {
             items[i] = null;
@@ -213,7 +215,7 @@ public class MyArrayList<E> implements List<E> {
         ++modCount;
     }
 
-    @Override // rdy??
+    @Override
     public int indexOf(Object o) {
         if (o == null) {
             for (int i = 0; i < size; i++) {
@@ -231,7 +233,7 @@ public class MyArrayList<E> implements List<E> {
         return -1;
     }
 
-    @Override // rdy??
+    @Override
     public int lastIndexOf(Object o) {
         if (o == null) {
             for (int i = size - 1; i >= 0; i--) {
@@ -249,7 +251,7 @@ public class MyArrayList<E> implements List<E> {
         return -1;
     }
 
-    @Override// rdy
+    @Override
     public E get(int i) {
         if (i < 0) {
             throw new IllegalArgumentException("Index can't be a negative number");
@@ -260,7 +262,7 @@ public class MyArrayList<E> implements List<E> {
         return items[i];
     }
 
-    @Override // rdy
+    @Override
     public E set(int i, E item) {
         if (i < 0) {
             throw new IllegalArgumentException("Index can't be a negative number");
@@ -273,7 +275,7 @@ public class MyArrayList<E> implements List<E> {
         return oldItem;
     }
 
-    @Override// rdy??
+    @Override
     public boolean add(E item) {
         ensureCapacity(size);
         items[size] = item;
@@ -282,7 +284,7 @@ public class MyArrayList<E> implements List<E> {
         return true;
     }
 
-    @Override // rdy??
+    @Override
     public void add(int i, E item) {
         if (i < 0) {
             throw new IllegalArgumentException("Index can't be a negative number");
@@ -297,7 +299,7 @@ public class MyArrayList<E> implements List<E> {
         ++modCount;
     }
 
-    @Override // rdy??
+    @Override
     public E remove(int i) {
         if (i < 0) {
             throw new IllegalArgumentException("Index can't be a negative number");
@@ -346,23 +348,28 @@ public class MyArrayList<E> implements List<E> {
     }
 
     public void print() {
+        System.out.print("[");
         for (Iterator<E> i = iterator(); i.hasNext(); ) {
             E item = i.next();
-            System.out.println(item);
+            if (!i.hasNext()) {
+                System.out.println(item + "]");
+                break;
+            }
+            System.out.print(item + ", ");
         }
     }
 
-    @Override// rdy
+    @Override
     public ListIterator<E> listIterator() {
         return null;
     }
 
-    @Override// rdy
+    @Override
     public ListIterator<E> listIterator(int index) {
         return null;
     }
 
-    @Override// rdy
+    @Override
     public List<E> subList(int fromIndex, int toIndex) {
         return null;
     }
