@@ -25,13 +25,13 @@ public class MainVector {
 
         System.out.println("Размерность вектора 3 = " + vector3.getSize());
 
-        vector3.addUp(vector4);
+        vector3.sum(vector4);
         System.out.println("Вектор 3 после сложение с вектором 4 = " + vector3.toString());
 
         vector3.subtract(vector4);
         System.out.println("Вектор 3 после вычитания вектора 4 = " + vector3.toString());
 
-        vector3.scalarMultiplication(5);
+        vector3.multiplicationOnScalar(5);
         System.out.println("Вектор 3 скалярно умноженный на 5 = " + vector3.toString());
 
         vector3.turn();

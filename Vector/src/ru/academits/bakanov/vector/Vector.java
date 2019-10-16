@@ -53,7 +53,7 @@ public class Vector {
         return components.length;
     }
 
-    public void addUp(Vector vector) {
+    public void sum(Vector vector) {
         int size = Math.max(vector.components.length, components.length);
         if (size > components.length) {
             components = Arrays.copyOf(components, size);
@@ -79,14 +79,14 @@ public class Vector {
         }
     }
 
-    public void scalarMultiplication(double a) {
+    public void multiplicationOnScalar(double a) {
         for (int i = 0; i < components.length; i++) {
             components[i] *= a;
         }
     }
 
     public void turn() {
-        scalarMultiplication(-1);
+        multiplicationOnScalar(-1);
     }
 
     public double getLength() {
@@ -134,15 +134,17 @@ public class Vector {
     }
 
     public static Vector getSum(Vector vector1, Vector vector2) {
-        Vector vector = new Vector(vector1.components);
-        vector.addUp(vector2);
-        return vector;
+        Vector v1 = new Vector(vector1.components);
+        Vector v2 = new Vector(vector2.components);
+        v1.sum(v2);
+        return v1;
     }
 
     public static Vector getDifferent(Vector vector1, Vector vector2) {
-        Vector vector = new Vector(vector1.components);
-        vector.subtract(vector2);
-        return vector;
+        Vector v1 = new Vector(vector1.components);
+        Vector v2 = new Vector(vector2.components);
+        v1.subtract(v2);
+        return v1;
     }
 
     public static double getScalarProduct(Vector vector1, Vector vector2) {
@@ -155,11 +157,3 @@ public class Vector {
         return scalarProduct;
     }
 }
-
-
-
-
-
-
-
-
