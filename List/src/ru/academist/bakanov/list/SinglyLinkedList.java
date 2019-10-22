@@ -46,29 +46,12 @@ public class SinglyLinkedList<T> {
     public T getItem(int index) {
         checkIndex(index);
 
-        /*int i = 0;
-
-        for (ListItem<T> p = head; p != null; p = p.getNext(), i++) {
-            if (i == index) {
-                return p.getData();
-            }
-        }*/
         return Objects.requireNonNull(iterator(index)).getData();
     }
 
     public T setItem(int index, T data) {
         checkIndex(index);
 
-        /*int i = 0;
-
-        for (ListItem<T> p = head; p != null; p = p.getNext(), i++) {
-            if (i == index) {
-                T oldData = p.getData();
-                p.setData(data);
-
-                return oldData;
-            }
-        }*/
         ListItem<T> item = iterator(index);
 
         T oldData = Objects.requireNonNull(item).getData();
@@ -80,35 +63,13 @@ public class SinglyLinkedList<T> {
     public T removeByIndex(int index) {
         checkIndex(index);
 
-        int i = 0;
+        ListItem<T> item = iterator(index);
 
-        for (ListItem<T> p = head, prev = null; p != null; prev = p, p = p.getNext(), i++) {
-            if (i == index) {
-                T removeData = p.getData();
+        Objects.requireNonNull(iterator(index - 1)).setNext(Objects.requireNonNull(iterator(index)).getNext());
 
-                Objects.requireNonNull(prev).setNext(p.getNext());
+        count--;
 
-                p = null;
-
-                count--;
-                return removeData;
-            }
-        }
-        /*for (ListItem<T> p = head; p != null; p = p.getNext(), i++) {
-            if (i == index) {
-                ListItem<T> next = p.getNext();
-                T removeData = p.getData();
-
-                p.setNext(next.getNext());
-                p.setData(next.getData());
-
-                count--;
-
-                return removeData;
-            }
-        }*/
-
-        return null;
+        return Objects.requireNonNull(item).getData();
     }
 
     public void addHead(T data) {
@@ -117,37 +78,22 @@ public class SinglyLinkedList<T> {
     }
 
     public void add(int index, T data) {
-        int i = 0;
-
         if (index == 0) {
             addHead(data);
-        }
+        } else if (index == count) {
+            ListItem<T> next = new ListItem<>(data, null);
 
-        else if (index == count) {
-            for (ListItem<T> p = head; p != null; p = p.getNext(), i++) {
-                if (i == index - 1) {
-                    ListItem<T> next = new ListItem<>(data, null);
-                    p.setNext(next);
+            Objects.requireNonNull(iterator(index - 1)).setNext(next);
 
-                    count++;
-
-                    break;
-                }
-            }
-        }
-
-        else {
+            count++;
+        } else {
             checkIndex(index);
-            for (ListItem<T> p = head; p != null; p = p.getNext(), i++) {
-                if (i == index - 1) {
-                    ListItem<T> next = new ListItem<>(data, p.getNext());
-                    p.setNext(next);
 
-                    count++;
+            ListItem<T> next = new ListItem<>(data, Objects.requireNonNull(iterator(index - 1)).getNext());
 
-                    break;
-                }
-            }
+            Objects.requireNonNull(iterator(index - 1)).setNext(next);
+
+            count++;
         }
     }
 
@@ -212,17 +158,8 @@ public class SinglyLinkedList<T> {
         SinglyLinkedList<T> node = new SinglyLinkedList<>();
 
         for (ListItem<T> p = head; p != null; p = p.getNext()) {
-            if (p == head) {
-                node.addHead(p.getData());
-            } else {
-                node.add(node.count - 1, p.getData());
-            }
+            node.add(node.count, p.getData());
         }
-        /*ListItem<T> second = node.head.getNext();
-
-        node.head.setNext(second.getNext());
-        second.setNext(node.head);
-        node.head = second;*/
 
         return node;
     }

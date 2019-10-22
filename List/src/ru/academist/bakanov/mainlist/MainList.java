@@ -25,19 +25,19 @@ public class MainList {
         Integer data = 22;
         System.out.println("Значение элемента с индексом " + index2 + " изменено с " + list.setItem(index2, data) + " на " + data);
 
-        /*int index3 = 3;
-        System.out.println("Удален элемент с индексом " + index3 + " и значением " + list.removeByIndex(index3));*/
+        int index3 = 5;
+        System.out.println("Удален элемент с индексом " + index3 + " и значением " + list.removeByIndex(index3));
 
-        list.add(6, 14);
-        System.out.println("Вставлен элемент с индексом 6 и значением 14");
+        int index4 = 5;
+        Integer data2 = 14;
+        list.add(index4, data2);
+        System.out.println("Вставлен элемент с индексом " + index4 + " и значением " + data2);
 
-        Integer data2 = 86;
-        System.out.println("Элементы со значением " + data2 + " удалены = " + list.removeByData(data2));
+        Integer data3 = 6;
+        System.out.println("Элементы со значением " + data3 + " удалены = " + list.removeByData(data3));
         list.print();
-        /*System.out.println("Удален первый элемент со значением " + list.removeHead());
-        ;
 
-
+        System.out.println("Удален первый элемент со значением " + list.removeHead());
 
         System.out.println("Итоговый список");
         list.print();
@@ -45,7 +45,7 @@ public class MainList {
 
         list.turn();
         System.out.println("Развернутый список");
-        list.print();*/
+        list.print();
 
         SinglyLinkedList node = list.copy();
         System.out.println("Копия списка");
