@@ -55,38 +55,38 @@ public class Vector {
 
     public void sum(Vector vector) {
         int size = Math.max(vector.components.length, components.length);
+        double[] vectorComponents = Arrays.copyOf(vector.components, size);
+
         if (size > components.length) {
             components = Arrays.copyOf(components, size);
         }
-        if (size > vector.components.length) {
-            vector.components = Arrays.copyOf(vector.components, size);
-        }
+
         for (int i = 0; i < size; i++) {
-            components[i] += vector.components[i];
+            components[i] += vectorComponents[i];
         }
     }
 
     public void subtract(Vector vector) {
         int size = Math.max(vector.components.length, components.length);
+        double[] vectorComponents = Arrays.copyOf(vector.components, size);
+
         if (size > components.length) {
             components = Arrays.copyOf(components, size);
         }
-        if (size > vector.components.length) {
-            vector.components = Arrays.copyOf(vector.components, size);
-        }
+
         for (int i = 0; i < size; i++) {
-            components[i] -= vector.components[i];
+            components[i] -= vectorComponents[i];
         }
     }
 
-    public void multiplicationOnScalar(double a) {
+    public void multiplyByScalar(double a) {
         for (int i = 0; i < components.length; i++) {
             components[i] *= a;
         }
     }
 
     public void turn() {
-        multiplicationOnScalar(-1);
+        multiplyByScalar(-1);
     }
 
     public double getLength() {
@@ -134,17 +134,17 @@ public class Vector {
     }
 
     public static Vector getSum(Vector vector1, Vector vector2) {
-        Vector v1 = new Vector(vector1.components);
-        Vector v2 = new Vector(vector2.components);
-        v1.sum(v2);
-        return v1;
+        Vector vector = new Vector(vector1.components);
+
+        vector.sum(vector2);
+        return vector;
     }
 
     public static Vector getDifferent(Vector vector1, Vector vector2) {
-        Vector v1 = new Vector(vector1.components);
-        Vector v2 = new Vector(vector2.components);
-        v1.subtract(v2);
-        return v1;
+        Vector vector = new Vector(vector1.components);
+
+        vector.subtract(vector2);
+        return vector;
     }
 
     public static double getScalarProduct(Vector vector1, Vector vector2) {

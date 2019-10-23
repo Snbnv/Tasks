@@ -31,7 +31,7 @@ public class MainVector {
         vector3.subtract(vector4);
         System.out.println("Вектор 3 после вычитания вектора 4 = " + vector3.toString());
 
-        vector3.multiplicationOnScalar(5);
+        vector3.multiplyByScalar(5);
         System.out.println("Вектор 3 скалярно умноженный на 5 = " + vector3.toString());
 
         vector3.turn();
