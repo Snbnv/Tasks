@@ -55,27 +55,41 @@ public class Vector {
 
     public void sum(Vector vector) {
         int size = Math.max(vector.components.length, components.length);
-        double[] vectorComponents = Arrays.copyOf(vector.components, size);
 
         if (size > components.length) {
             components = Arrays.copyOf(components, size);
         }
 
-        for (int i = 0; i < size; i++) {
-            components[i] += vectorComponents[i];
+        if (size > vector.components.length){
+            double[] vectorComponents = Arrays.copyOf(vector.components, size);
+
+            for (int i = 0; i < size; i++) {
+                components[i] += vectorComponents[i];
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                components[i] += vector.components[i];
+            }
         }
     }
 
     public void subtract(Vector vector) {
         int size = Math.max(vector.components.length, components.length);
-        double[] vectorComponents = Arrays.copyOf(vector.components, size);
 
         if (size > components.length) {
             components = Arrays.copyOf(components, size);
         }
 
-        for (int i = 0; i < size; i++) {
-            components[i] -= vectorComponents[i];
+        if (size > vector.components.length){
+            double[] vectorComponents = Arrays.copyOf(vector.components, size);
+
+            for (int i = 0; i < size; i++) {
+                components[i] -= vectorComponents[i];
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                components[i] -= vector.components[i];
+            }
         }
     }
 
