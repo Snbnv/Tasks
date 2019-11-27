@@ -60,16 +60,8 @@ public class Vector {
             components = Arrays.copyOf(components, size);
         }
 
-        if (size > vector.components.length){
-            double[] vectorComponents = Arrays.copyOf(vector.components, size);
-
-            for (int i = 0; i < size; i++) {
-                components[i] += vectorComponents[i];
-            }
-        } else {
-            for (int i = 0; i < size; i++) {
-                components[i] += vector.components[i];
-            }
+        for (int i = 0; i < vector.components.length; i++) {
+            components[i] += vector.components[i];
         }
     }
 
@@ -80,16 +72,8 @@ public class Vector {
             components = Arrays.copyOf(components, size);
         }
 
-        if (size > vector.components.length){
-            double[] vectorComponents = Arrays.copyOf(vector.components, size);
-
-            for (int i = 0; i < size; i++) {
-                components[i] -= vectorComponents[i];
-            }
-        } else {
-            for (int i = 0; i < size; i++) {
-                components[i] -= vector.components[i];
-            }
+        for (int i = 0; i < vector.components.length; i++) {
+            components[i] -= vector.components[i];
         }
     }
 
